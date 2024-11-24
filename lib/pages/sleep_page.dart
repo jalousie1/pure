@@ -84,7 +84,7 @@ class _SleepPageState extends State<SleepPage> with SingleTickerProviderStateMix
       }
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Falha ao carregar dados de sono')),
+        const SnackBar(content: Text('Failed to load sleep data')),
       );
     } finally {
       setState(() => _isLoading = false);
@@ -106,7 +106,7 @@ class _SleepPageState extends State<SleepPage> with SingleTickerProviderStateMix
       });
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Falha ao salvar dados de sono')),
+        const SnackBar(content: Text('Failed to save sleep data')),
       );
     }
   }
@@ -132,7 +132,7 @@ class _SleepPageState extends State<SleepPage> with SingleTickerProviderStateMix
     return StatefulBuilder(
       builder: (context, setState) {
         return AlertDialog(
-          title: Text(record == null ? 'Adicionar Registro de Sono' : 'Editar Registro de Sono'),
+          title: Text(record == null ? 'Add Sleep Record' : 'Edit Sleep Record'),
           content: SingleChildScrollView(
             child: Column(
               mainAxisSize: MainAxisSize.min,
@@ -144,7 +144,7 @@ class _SleepPageState extends State<SleepPage> with SingleTickerProviderStateMix
                 // Seletor de Hora de Dormir
                 _buildTimeSelector(
                   context: context,
-                  title: 'Hora de dormir',
+                  title: 'Bedtime',
                   icon: Icons.bedtime,
                   time: dialogState.bedtime,
                   onTimeSelected: (time) {
@@ -156,7 +156,7 @@ class _SleepPageState extends State<SleepPage> with SingleTickerProviderStateMix
                 // Seletor de Hora de Acordar
                 _buildTimeSelector(
                   context: context,
-                  title: 'Hora de acordar',
+                  title: 'Wake up time',
                   icon: Icons.alarm,
                   time: dialogState.wakeupTime,
                   onTimeSelected: (time) {
@@ -173,11 +173,11 @@ class _SleepPageState extends State<SleepPage> with SingleTickerProviderStateMix
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context),
-              child: const Text('Cancelar'),
+              child: const Text('Cancel'),
             ),
             FilledButton(
               onPressed: () => _saveSleepRecord(context, dialogState, record),
-              child: const Text('Salvar'),
+              child: const Text('Save'),
             ),
           ],
         );
@@ -209,7 +209,7 @@ class _SleepPageState extends State<SleepPage> with SingleTickerProviderStateMix
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Text(
-                    'Data',
+                    'Date',
                     style: TextStyle(fontSize: 12, color: Colors.grey),
                   ),
                   Text(
@@ -288,7 +288,7 @@ class _SleepPageState extends State<SleepPage> with SingleTickerProviderStateMix
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Duração do sono',
+                'Sleep duration',
                 style: TextStyle(
                   fontSize: 12,
                   color: Theme.of(context).colorScheme.onPrimaryContainer,
@@ -409,7 +409,7 @@ class _SleepPageState extends State<SleepPage> with SingleTickerProviderStateMix
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    'Objetivo de Sono',
+                    'Sleep Goal',
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w500,
@@ -459,7 +459,7 @@ class _SleepPageState extends State<SleepPage> with SingleTickerProviderStateMix
                               ),
                             ),
                             Text(
-                              'de ${(_sleepGoalInMinutes ~/ 60)}h',
+                              'of ${(_sleepGoalInMinutes ~/ 60)}h',
                               style: TextStyle(
                                 fontSize: 14,
                                 color: Theme.of(context).colorScheme.onSurfaceVariant,
@@ -467,14 +467,14 @@ class _SleepPageState extends State<SleepPage> with SingleTickerProviderStateMix
                             ),
                           ] else ...[
                             Text(
-                              'Sem registros',
+                              'No records',
                               style: TextStyle(
                                 fontSize: 16,
                                 color: Theme.of(context).colorScheme.onSurfaceVariant,
                               ),
                             ),
                             Text(
-                              'Meta: ${(_sleepGoalInMinutes ~/ 60)}h',
+                              'Goal: ${(_sleepGoalInMinutes ~/ 60)}h',
                               style: TextStyle(
                                 fontSize: 14,
                                 color: Theme.of(context).colorScheme.onSurfaceVariant,
@@ -553,7 +553,7 @@ class _SleepPageState extends State<SleepPage> with SingleTickerProviderStateMix
                       child: _buildTimeInfo(
                         context,
                         Icons.bedtime_outlined,
-                        'Dormiu',
+                        'Slept',
                         TimeOfDay.fromDateTime(record.bedtime).format(context),
                       ),
                     ),
@@ -561,7 +561,7 @@ class _SleepPageState extends State<SleepPage> with SingleTickerProviderStateMix
                       child: _buildTimeInfo(
                         context,
                         Icons.wb_sunny_outlined,
-                        'Acordou',
+                        'Woke up',
                         TimeOfDay.fromDateTime(record.wakeupTime).format(context),
                       ),
                     ),
@@ -569,7 +569,7 @@ class _SleepPageState extends State<SleepPage> with SingleTickerProviderStateMix
                       child: _buildTimeInfo(
                         context,
                         Icons.timer_outlined,
-                        'Duração',
+                        'Duration',
                         duration,
                       ),
                     ),
@@ -618,7 +618,7 @@ class _SleepPageState extends State<SleepPage> with SingleTickerProviderStateMix
     bool? result = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Definir Objetivo de Sono'),
+        title: const Text('Set Sleep Goal'),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -626,9 +626,9 @@ class _SleepPageState extends State<SleepPage> with SingleTickerProviderStateMix
               controller: controller,
               keyboardType: TextInputType.number,
               decoration: const InputDecoration(
-                labelText: 'Horas de sono',
-                helperText: 'Entre 4 e 12 horas',
-                suffixText: 'horas',
+                labelText: 'Sleep hours',
+                helperText: 'Between 4 and 12 hours',
+                suffixText: 'hours',
                 border: OutlineInputBorder(),
               ),
               autofocus: true,
@@ -638,7 +638,7 @@ class _SleepPageState extends State<SleepPage> with SingleTickerProviderStateMix
             ),
             const SizedBox(height: 8),
             Text(
-              'Atual: ${(_sleepGoalInMinutes ~/ 60)}h',
+              'Current: ${(_sleepGoalInMinutes ~/ 60)}h',
               style: Theme.of(context).textTheme.bodySmall,
             ),
           ],
@@ -646,11 +646,11 @@ class _SleepPageState extends State<SleepPage> with SingleTickerProviderStateMix
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context, false),
-            child: const Text('Cancelar'),
+            child: const Text('Cancel'),
           ),
           FilledButton(
             onPressed: () => _validateAndSaveGoal(controller.text, context),
-            child: const Text('Salvar'),
+            child: const Text('Save'),
           ),
         ],
       ),
@@ -659,7 +659,7 @@ class _SleepPageState extends State<SleepPage> with SingleTickerProviderStateMix
     if (result == true) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text('Objetivo de sono atualizado com sucesso!'),
+          content: Text('Sleep goal updated successfully!'),
           behavior: SnackBarBehavior.floating,
         ),
       );
@@ -670,12 +670,12 @@ class _SleepPageState extends State<SleepPage> with SingleTickerProviderStateMix
     final hours = int.tryParse(value);
     
     if (hours == null) {
-      _showGoalError('Por favor, insira um número válido');
+      _showGoalError('Please enter a valid number');
       return;
     }
 
     if (hours < 4 || hours > 12) {
-      _showGoalError('O objetivo deve estar entre 4 e 12 horas');
+      _showGoalError('Goal must be between 4 and 12 hours');
       return;
     }
 
@@ -688,7 +688,7 @@ class _SleepPageState extends State<SleepPage> with SingleTickerProviderStateMix
       await _saveSleepData();
       if (mounted) Navigator.pop(context, true);
     } catch (e) {
-      _showGoalError('Erro ao salvar o objetivo');
+      _showGoalError('Error saving goal');
     }
   }
 
@@ -742,7 +742,7 @@ class _SleepPageState extends State<SleepPage> with SingleTickerProviderStateMix
               children: [
                 Expanded(
                   child: _buildAnalyticItem(
-                    'Média Geral',
+                    'Overall Average',
                     '${(avgSleep ~/ 60)}h ${(avgSleep % 60).toInt()}m',
                     Icons.analytics_outlined,
                   ),
@@ -750,7 +750,7 @@ class _SleepPageState extends State<SleepPage> with SingleTickerProviderStateMix
                 const SizedBox(width: 16),
                 Expanded(
                   child: _buildAnalyticItem(
-                    'Último Registro',
+                    'Latest Record',
                     recentRecord != null
                         ? '${(recentRecord.durationInMinutes ~/ 60)}h ${(recentRecord.durationInMinutes % 60)}m'
                         : '-',
@@ -844,7 +844,7 @@ class _SleepPageState extends State<SleepPage> with SingleTickerProviderStateMix
                   if (_sleepRecords.isEmpty)
                     Center(
                       child: Text(
-                        'Nenhum registro de sono ainda',
+                        'No sleep records yet',
                         style: TextStyle(
                           color: Theme.of(context).colorScheme.onSurfaceVariant,
                         ),
@@ -858,7 +858,7 @@ class _SleepPageState extends State<SleepPage> with SingleTickerProviderStateMix
       floatingActionButton: FloatingActionButton.extended(
         onPressed: _addSleepRecord,
         icon: const Icon(Icons.add),
-        label: const Text('Novo registro'),
+        label: const Text('New record'),
       ),
     );
   }

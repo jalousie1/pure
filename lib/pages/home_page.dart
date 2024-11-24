@@ -29,21 +29,21 @@ class _HomePageWidgetState extends State<HomePageWidget> with SingleTickerProvid
   String _currentDate = DateTime.now().toIso8601String().split('T')[0];
   
   final List<String> _healthTips = [
-    'Beba pelo menos 8 copos de água por dia para manter-se hidratado.',
-    'Pratique 30 minutos de atividade física moderada diariamente.',
-    'Mantenha uma rotina regular de sono de 7-8 horas por noite.',
-    'Inclua frutas e vegetais em todas as refeições principais.',
-    'Faça pausas regulares durante o trabalho para alongar-se.',
-    'Pratique técnicas de respiração para reduzir o estresse.',
-    'Mantenha uma postura adequada ao usar dispositivos eletrônicos.',
-    'Coma devagar e mastigue bem os alimentos.',
-    'Estabeleça limites saudáveis entre trabalho e descanso.',
-    'Proteja sua pele usando protetor solar diariamente.',
-    'Pratique mindfulness por alguns minutos todos os dias.',
-    'Mantenha um diário de gratidão para bem-estar mental.',
-    'Faça exercícios de alongamento ao acordar.',
-    'Evite usar eletrônicos uma hora antes de dormir.',
-    'Mantenha uma alimentação colorida e variada.',
+    'Drink at least 8 glasses of water a day to stay hydrated.',
+    'Practice 30 minutes of moderate physical activity daily.',
+    'Maintain a regular sleep routine of 7-8 hours per night.',
+    'Include fruits and vegetables in all main meals.',
+    'Take regular breaks during work to stretch.',
+    'Practice breathing techniques to reduce stress.',
+    'Maintain proper posture when using electronic devices.',
+    'Eat slowly and chew food well.',
+    'Establish healthy boundaries between work and rest.',
+    'Protect your skin by using sunscreen daily.',
+    'Practice mindfulness for a few minutes every day.',
+    'Keep a gratitude journal for mental well-being.',
+    'Do stretching exercises when you wake up.',
+    'Avoid using electronics one hour before bed.',
+    'Maintain a colorful and varied diet.',
   ];
 
   final Map<String, Map<String, dynamic>> _moods = {
@@ -753,7 +753,7 @@ class _HomePageWidgetState extends State<HomePageWidget> with SingleTickerProvid
                     ),
                     const SizedBox(width: 8),
                     Text(
-                      'Dica do Dia',
+                      'Daily Tip',
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w500,

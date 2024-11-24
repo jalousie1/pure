@@ -16,10 +16,10 @@ class _MealsPageState extends State<MealsPage> with SingleTickerProviderStateMix
   bool _isLoading = true;
 
   final List<Map<String, dynamic>> _mealTypes = [
-    {'type': 'Café da Manhã', 'icon': Icons.breakfast_dining},
-    {'type': 'Almoço', 'icon': Icons.lunch_dining},
-    {'type': 'Lanche da Tarde', 'icon': Icons.coffee},
-    {'type': 'Jantar', 'icon': Icons.dinner_dining},
+    {'type': 'Breakfast', 'icon': Icons.breakfast_dining},
+    {'type': 'Lunch', 'icon': Icons.lunch_dining},
+    {'type': 'Snack', 'icon': Icons.coffee},
+    {'type': 'Dinner', 'icon': Icons.dinner_dining},
   ];
 
   late AnimationController _animationController;
@@ -112,7 +112,7 @@ class _MealsPageState extends State<MealsPage> with SingleTickerProviderStateMix
     return StatefulBuilder(
       builder: (context, setState) {
         return AlertDialog(
-          title: Text(meal == null ? 'Adicionar Refeição' : 'Editar Refeição'),
+          title: Text(meal == null ? 'Add Meal' : 'Edit Meal'),
           content: SingleChildScrollView(
             child: Column(
               mainAxisSize: MainAxisSize.min,
@@ -121,7 +121,7 @@ class _MealsPageState extends State<MealsPage> with SingleTickerProviderStateMix
                 DropdownButtonFormField<String>(
                   value: selectedType,
                   decoration: const InputDecoration(
-                    labelText: 'Tipo de Refeição',
+                    labelText: 'Meal Type',
                     border: OutlineInputBorder(),
                   ),
                   items: _mealTypes.map<DropdownMenuItem<String>>((type) {
@@ -149,7 +149,7 @@ class _MealsPageState extends State<MealsPage> with SingleTickerProviderStateMix
                 TextField(
                   controller: descriptionController,
                   decoration: const InputDecoration(
-                    labelText: 'Descrição',
+                    labelText: 'Description',
                     border: OutlineInputBorder(),
                   ),
                   maxLines: null,
@@ -159,7 +159,7 @@ class _MealsPageState extends State<MealsPage> with SingleTickerProviderStateMix
                 TextField(
                   controller: caloriesController,
                   decoration: const InputDecoration(
-                    labelText: 'Calorias',
+                    labelText: 'Calories',
                     border: OutlineInputBorder(),
                   ),
                   keyboardType: TextInputType.number,
@@ -170,7 +170,7 @@ class _MealsPageState extends State<MealsPage> with SingleTickerProviderStateMix
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context),
-              child: const Text('Cancelar'),
+              child: const Text('Cancel'),
             ),
             FilledButton(
               onPressed: () async {
@@ -192,7 +192,7 @@ class _MealsPageState extends State<MealsPage> with SingleTickerProviderStateMix
                 await _saveMeals();
                 if (mounted) Navigator.pop(context);
               },
-              child: const Text('Salvar'),
+              child: const Text('Save'),
             ),
           ],
         );
@@ -227,7 +227,7 @@ class _MealsPageState extends State<MealsPage> with SingleTickerProviderStateMix
         child: Column(
           children: [
             Text(
-              'Resumo de Refeições',
+              'Meals Summary',
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w500,
@@ -240,17 +240,17 @@ class _MealsPageState extends State<MealsPage> with SingleTickerProviderStateMix
               children: [
                 _buildSummaryItem(
                   icon: Icons.restaurant,
-                  label: 'Total Refeições',
+                  label: 'Total Meals',
                   value: mealCount.toString(),
                 ),
                 _buildSummaryItem(
                   icon: Icons.local_fire_department,
-                  label: 'Total Calorias',
+                  label: 'Total Calories',
                   value: '$totalCalories kcal',
                 ),
                 _buildSummaryItem(
                   icon: Icons.analytics,
-                  label: 'Média/Refeição',
+                  label: 'Average/Meal',
                   value: '${avgCalories.toStringAsFixed(0)} kcal',
                 ),
               ],
@@ -296,7 +296,7 @@ class _MealsPageState extends State<MealsPage> with SingleTickerProviderStateMix
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Refeições'),
+        title: const Text('Meals'),
         centerTitle: true,
         elevation: 0,
       ),
@@ -313,7 +313,7 @@ class _MealsPageState extends State<MealsPage> with SingleTickerProviderStateMix
                   if (_meals.isEmpty)
                     Center(
                       child: Text(
-                        'Nenhuma refeição registrada',
+                        'No meals registered',
                         style: TextStyle(
                           color: Theme.of(context).colorScheme.onSurfaceVariant,
                         ),
@@ -343,7 +343,7 @@ class _MealsPageState extends State<MealsPage> with SingleTickerProviderStateMix
       floatingActionButton: FloatingActionButton.extended(
         onPressed: _addMeal,
         icon: const Icon(Icons.add),
-        label: const Text('Nova refeição'),
+        label: const Text('New meal'),
       ),
     );
   }
@@ -383,11 +383,11 @@ class _MealsPageState extends State<MealsPage> with SingleTickerProviderStateMix
                     itemBuilder: (context) => [
                       const PopupMenuItem(
                         value: 'edit',
-                        child: Text('Editar'),
+                        child: Text('Edit'),
                       ),
                       const PopupMenuItem(
                         value: 'delete',
-                        child: Text('Excluir'),
+                        child: Text('Delete'),
                       ),
                     ],
                     onSelected: (value) async {

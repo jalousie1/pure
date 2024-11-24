@@ -16,12 +16,12 @@ class _WorkoutsPageState extends State<WorkoutsPage> {
   bool _isLoading = true;
 
   final List<Map<String, dynamic>> _workoutTypes = [
-    {'name': 'Corrida', 'icon': Icons.directions_run},
-    {'name': 'Musculação', 'icon': Icons.fitness_center},
+    {'name': 'Running', 'icon': Icons.directions_run},
+    {'name': 'Weight Training', 'icon': Icons.fitness_center},
     {'name': 'Yoga', 'icon': Icons.self_improvement},
-    {'name': 'Natação', 'icon': Icons.pool},
-    {'name': 'Ciclismo', 'icon': Icons.directions_bike},
-    {'name': 'Caminhada', 'icon': Icons.directions_walk},
+    {'name': 'Swimming', 'icon': Icons.pool},
+    {'name': 'Cycling', 'icon': Icons.directions_bike},
+    {'name': 'Walking', 'icon': Icons.directions_walk},
   ];
 
   @override

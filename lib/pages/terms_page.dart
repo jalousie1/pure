@@ -7,7 +7,7 @@ class TermsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Termos e Condições'),
+        title: const Text('Terms and Conditions'),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
@@ -15,7 +15,7 @@ class TermsPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: const [
             Text(
-              'Termos e Condições de Uso',
+              'Terms and Conditions of Use',
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
@@ -23,57 +23,57 @@ class TermsPage extends StatelessWidget {
             ),
             SizedBox(height: 16),
             Text(
-              '1. Aceitação dos Termos\n\n'
-              'Ao acessar e usar o aplicativo PureLife, você concorda em cumprir estes termos e condições de uso. Se você não concordar com qualquer parte destes termos, não deverá usar o aplicativo.\n\n'
+              '1. Acceptance of Terms\n\n'
+              'By accessing and using the PureLife app, you agree to comply with these terms and conditions of use. If you do not agree with any part of these terms, you should not use the app.\n\n'
               
-              '2. Descrição do Serviço\n\n'
-              'O PureLife é um aplicativo de saúde e bem-estar que oferece recursos como:\n'
-              '• Monitoramento de atividades físicas e passos\n'
-              '• Registro de medicamentos e lembretes\n'
-              '• Acompanhamento de refeições e hidratação\n'
-              '• Monitoramento de sono\n'
-              '• Assistente virtual de saúde (MindBot)\n'
-              '• Registro de humor e bem-estar\n\n'
+              '2. Service Description\n\n'
+              'PureLife is a health and wellness app that offers features such as:\n'
+              '• Physical activity and step tracking\n'
+              '• Medication logging and reminders\n'
+              '• Meal and hydration tracking\n'
+              '• Sleep monitoring\n'
+              '• Virtual health assistant (MindBot)\n'
+              '• Mood and wellness tracking\n\n'
               
-              '3. Responsabilidades do Usuário\n\n'
-              'O usuário é responsável por:\n'
-              '• Fornecer informações precisas e verdadeiras\n'
-              '• Manter a segurança de sua conta e senha\n'
-              '• Usar o aplicativo de acordo com as leis aplicáveis\n'
-              '• Não compartilhar informações sensíveis de saúde com outros usuários\n\n'
+              '3. User Responsibilities\n\n'
+              'The user is responsible for:\n'
+              '• Providing accurate and truthful information\n'
+              '• Maintaining account and password security\n'
+              '• Using the app in accordance with applicable laws\n'
+              '• Not sharing sensitive health information with other users\n\n'
               
-              '4. Limitações do Serviço\n\n'
-              'O PureLife não substitui atendimento médico profissional. As informações e sugestões fornecidas pelo aplicativo, incluindo o MindBot, são apenas para fins informativos e de bem-estar geral.\n\n'
+              '4. Service Limitations\n\n'
+              'PureLife does not replace professional medical care. Information and suggestions provided by the app, including MindBot, are for informational and general wellness purposes only.\n\n'
               
-              '5. Privacidade e Dados\n\n'
-              'Coletamos e processamos dados como:\n'
-              '• Informações de perfil (nome, idade, CEP)\n'
-              '• Dados de atividade física e passos\n'
-              '• Registros de medicamentos e refeições\n'
-              '• Informações de humor e bem-estar\n'
-              '• Interações com o MindBot\n\n'
-              'Seus dados são protegidos e tratados de acordo com nossa Política de Privacidade e leis de proteção de dados aplicáveis.\n\n'
+              '5. Privacy and Data\n\n'
+              'We collect and process data such as:\n'
+              '• Profile information (name, age, ZIP code)\n'
+              '• Physical activity and step data\n'
+              '• Medication and meal records\n'
+              '• Mood and wellness information\n'
+              '• MindBot interactions\n\n'
+              'Your data is protected and processed according to our Privacy Policy and applicable data protection laws.\n\n'
               
-              '6. Permissões do Dispositivo\n\n'
-              'O aplicativo requer acesso a:\n'
-              '• Sensores de atividade física\n'
-              '• Armazenamento para salvar dados locais\n'
-              '• Internet para sincronização e funcionamento do MindBot\n\n'
+              '6. Device Permissions\n\n'
+              'The app requires access to:\n'
+              '• Physical activity sensors\n'
+              '• Storage for local data\n'
+              '• Internet for synchronization and MindBot functionality\n\n'
               
-              '7. Segurança\n\n'
-              'Utilizamos tecnologias de segurança para proteger seus dados, incluindo:\n'
-              '• Autenticação segura via Firebase\n'
-              '• Criptografia de dados sensíveis\n'
-              '• Controle de acesso aos dados\n\n'
+              '7. Security\n\n'
+              'We use security technologies to protect your data, including:\n'
+              '• Secure authentication via Firebase\n'
+              '• Encryption of sensitive data\n'
+              '• Data access control\n\n'
               
-              '8. Alterações nos Termos\n\n'
-              'Reservamo-nos o direito de modificar estes termos a qualquer momento. Alterações significativas serão notificadas através do aplicativo.\n\n'
+              '8. Changes to Terms\n\n'
+              'We reserve the right to modify these terms at any time. Significant changes will be notified through the app.\n\n'
               
-              '9. Contato\n\n'
-              'Para questões sobre estes termos ou sobre o aplicativo, entre em contato através do MindBot ou nossos canais de suporte.\n\n'
+              '9. Contact\n\n'
+              'For questions about these terms or the app, contact us through MindBot or our support channels.\n\n'
               
-              '10. Encerramento\n\n'
-              'Reservamo-nos o direito de encerrar o acesso ao aplicativo em caso de violação destes termos ou uso inadequado do serviço.',
+              '10. Termination\n\n'
+              'We reserve the right to terminate access to the app in case of violation of these terms or inappropriate use of the service.',
               style: TextStyle(fontSize: 16),
             ),
           ],

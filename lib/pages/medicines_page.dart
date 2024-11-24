@@ -103,7 +103,7 @@ class _MedicinesPageState extends State<MedicinesPage> with SingleTickerProvider
       builder: (context, setState) {
         return AlertDialog(
           title: Text(
-            medicine == null ? 'Adicionar Medicamento' : 'Editar Medicamento',
+            medicine == null ? 'Add Medicine' : 'Edit Medicine',
           ),
           content: SingleChildScrollView(
             child: Column(
@@ -113,7 +113,7 @@ class _MedicinesPageState extends State<MedicinesPage> with SingleTickerProvider
                 TextField(
                   controller: nameController,
                   decoration: const InputDecoration(
-                    labelText: 'Nome do Medicamento',
+                    labelText: 'Medicine Name',
                     border: OutlineInputBorder(),
                   ),
                 ),
@@ -140,7 +140,7 @@ class _MedicinesPageState extends State<MedicinesPage> with SingleTickerProvider
                   },
                   child: InputDecorator(
                     decoration: const InputDecoration(
-                      labelText: 'Horário',
+                      labelText: 'Time',
                       border: OutlineInputBorder(),
                     ),
                     child: Row(
@@ -160,7 +160,7 @@ class _MedicinesPageState extends State<MedicinesPage> with SingleTickerProvider
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context),
-              child: const Text('Cancelar'),
+              child: const Text('Cancel'),
             ),
             FilledButton(
               onPressed: () async {
@@ -182,7 +182,7 @@ class _MedicinesPageState extends State<MedicinesPage> with SingleTickerProvider
                 await _saveMedicines();
                 if (mounted) Navigator.pop(context);
               },
-              child: const Text('Salvar'),
+              child: const Text('Save'),
             ),
           ],
         );
@@ -211,7 +211,7 @@ class _MedicinesPageState extends State<MedicinesPage> with SingleTickerProvider
         child: Column(
           children: [
             Text(
-              'Resumo de Medicamentos',
+              'Medicine Summary',
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w500,
@@ -224,17 +224,17 @@ class _MedicinesPageState extends State<MedicinesPage> with SingleTickerProvider
               children: [
                 _buildSummaryItem(
                   icon: Icons.wb_sunny,
-                  label: 'Manhã',
+                  label: 'Morning',
                   value: '$morningMeds',
                 ),
                 _buildSummaryItem(
                   icon: Icons.wb_twighlight,
-                  label: 'Tarde',
+                  label: 'Afternoon',
                   value: '$afternoonMeds',
                 ),
                 _buildSummaryItem(
                   icon: Icons.nights_stay,
-                  label: 'Noite',
+                  label: 'Night',
                   value: '$eveningMeds',
                 ),
               ],
@@ -288,7 +288,7 @@ class _MedicinesPageState extends State<MedicinesPage> with SingleTickerProvider
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Medicamentos'),
+        title: const Text('Medicines'),
         centerTitle: true,
         elevation: 0,
       ),
@@ -302,7 +302,7 @@ class _MedicinesPageState extends State<MedicinesPage> with SingleTickerProvider
                 if (_medicines.isEmpty)
                   Center(
                     child: Text(
-                      'Nenhum medicamento registrado',
+                      'No medicines registered',
                       style: TextStyle(
                         color: Theme.of(context).colorScheme.onSurfaceVariant,
                       ),
@@ -326,7 +326,7 @@ class _MedicinesPageState extends State<MedicinesPage> with SingleTickerProvider
       floatingActionButton: FloatingActionButton.extended(
         onPressed: _addMedicine,
         icon: const Icon(Icons.add),
-        label: const Text('Novo medicamento'),
+        label: const Text('New medicine'),
       ),
     );
   }
@@ -334,18 +334,18 @@ class _MedicinesPageState extends State<MedicinesPage> with SingleTickerProvider
   // Add helper method to group and sort medicines
   Map<String, List<Medicine>> _groupAndSortMedicines() {
     final groups = <String, List<Medicine>>{
-      'Manhã (5h-12h)': [],
-      'Tarde (12h-18h)': [],
-      'Noite (18h-5h)': [],
+      'Morning (5h-12h)': [],
+      'Afternoon (12h-18h)': [],
+      'Night (18h-5h)': [],
     };
 
     for (var medicine in _medicines) {
       if (medicine.hour >= 5 && medicine.hour < 12) {
-        groups['Manhã (5h-12h)']!.add(medicine);
+        groups['Morning (5h-12h)']!.add(medicine);
       } else if (medicine.hour >= 12 && medicine.hour < 18) {
-        groups['Tarde (12h-18h)']!.add(medicine);
+        groups['Afternoon (12h-18h)']!.add(medicine);
       } else {
-        groups['Noite (18h-5h)']!.add(medicine);
+        groups['Night (18h-5h)']!.add(medicine);
       }
     }
 
@@ -408,11 +408,11 @@ class _MedicinesPageState extends State<MedicinesPage> with SingleTickerProvider
           itemBuilder: (context) => [
             const PopupMenuItem(
               value: 'edit',
-              child: Text('Editar'),
+              child: Text('Edit'),
             ),
             const PopupMenuItem(
               value: 'delete',
-              child: Text('Excluir'),
+              child: Text('Delete'),
             ),
           ],
           onSelected: (value) async {
