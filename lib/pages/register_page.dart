@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+// Página de registro de usuário
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
 
@@ -17,19 +18,20 @@ class _RegisterPageState extends State<RegisterPage> {
   final _confirmPasswordController = TextEditingController();
   bool _isLoading = false;
 
+  // Função responsável por registrar o usuário no Firebase
   Future<void> _register() async {
     if (!_formKey.currentState!.validate()) return;
 
     setState(() => _isLoading = true);
 
     try {
-      // Create user with email and password
+      // Cria o usuário no Firebase Authentication
       final userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: _emailController.text.trim(),
         password: _passwordController.text,
       );
 
-      // Store initial user data in Firestore
+      // Salva os dados do usuário no Firestore
       await FirebaseFirestore.instance
           .collection('users')
           .doc(userCredential.user!.uid) // Use the user's UID as document ID
@@ -43,6 +45,7 @@ class _RegisterPageState extends State<RegisterPage> {
         Navigator.pushNamed(context, '/after_register');
       }
     } on FirebaseAuthException catch (e) {
+      // Tratamento de erros do Firebase Authentication
       print('Firebase Auth Error: ${e.code} - ${e.message}');
       String message = 'An error occurred';
       if (e.code == 'weak-password') {
@@ -65,6 +68,7 @@ class _RegisterPageState extends State<RegisterPage> {
     }
   }
 
+  // Constrói a interface da página de registro
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;

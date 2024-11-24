@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+// Página inicial do aplicativo que mostra as opções de login e registro
 class StartPageWidget extends StatelessWidget {
   const StartPageWidget({super.key});
 
@@ -9,6 +10,7 @@ class StartPageWidget extends StatelessWidget {
     
     return Scaffold(
       backgroundColor: colorScheme.surface,
+      // Área principal que contém todos os elementos centralizados
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 32),
@@ -16,6 +18,7 @@ class StartPageWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
+              // Logotipo do aplicativo
               Icon(
                 Icons.spa_outlined,
                 size: 80,
@@ -33,6 +36,7 @@ class StartPageWidget extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 64),
+              // Botões de navegação
               FilledButton(
                 onPressed: () => Navigator.pushNamed(context, '/login'),
                 style: FilledButton.styleFrom(
@@ -67,6 +71,7 @@ class StartPageWidget extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 24),
+              // Texto dos termos e condições clicável
               GestureDetector(
                 onTap: () => Navigator.pushNamed(context, '/terms'),
                 child: Text(

@@ -54,6 +54,7 @@ class _HomePageWidgetState extends State<HomePageWidget> with SingleTickerProvid
     'stressed': {'emoji': '😤', 'text': 'Stressed', 'color': Colors.red},
   };
 
+  // Inicializa o contador de passos e carrega os dados do usuário
   @override
   void initState() {
     super.initState();
@@ -76,6 +77,7 @@ class _HomePageWidgetState extends State<HomePageWidget> with SingleTickerProvid
     super.dispose();
   }
 
+  // Solicita permissão e inicia contagem de passos
   void _initPlatformState() async {
     // Request permission
     if (await Permission.activityRecognition.request().isGranted) {
@@ -100,6 +102,7 @@ class _HomePageWidgetState extends State<HomePageWidget> with SingleTickerProvid
     print('Step count error: $error');
   }
 
+  // Carrega os dados do usuário do Firebase (nome, meta de passos, etc)
   Future<void> _loadUserData() async {
     try {
       final user = FirebaseAuth.instance.currentUser;
@@ -122,6 +125,7 @@ class _HomePageWidgetState extends State<HomePageWidget> with SingleTickerProvid
     }
   }
 
+  // Atualiza a meta diária de passos no Firebase
   Future<void> _updateStepGoal(int newGoal) async {
     try {
       final user = FirebaseAuth.instance.currentUser;
@@ -140,6 +144,7 @@ class _HomePageWidgetState extends State<HomePageWidget> with SingleTickerProvid
     }
   }
 
+  // Mostra diálogo para alterar a meta de passos
   Future<void> _showGoalDialog() async {
     final controller = TextEditingController(text: _dailyGoal.toString());
     return showDialog(
@@ -174,6 +179,7 @@ class _HomePageWidgetState extends State<HomePageWidget> with SingleTickerProvid
     );
   }
 
+  // Seleciona uma dica de saúde aleatória da lista
   void _selectRandomTip() {
     final random = Random();
     setState(() {
@@ -181,6 +187,7 @@ class _HomePageWidgetState extends State<HomePageWidget> with SingleTickerProvid
     });
   }
 
+  // Carrega o humor atual do usuário do Firebase
   Future<void> _loadCurrentMood() async {
     try {
       final user = FirebaseAuth.instance.currentUser;
@@ -209,6 +216,7 @@ class _HomePageWidgetState extends State<HomePageWidget> with SingleTickerProvid
     }
   }
 
+  // Atualiza o humor do usuário no Firebase (possível a cada 4 horas)
   Future<void> _updateMood(String mood) async {
     if (!_canUpdateMood) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -256,6 +264,7 @@ class _HomePageWidgetState extends State<HomePageWidget> with SingleTickerProvid
     }
   }
 
+  // Carrega o consumo de água do dia atual
   Future<void> _loadWaterIntake() async {
     try {
       final user = FirebaseAuth.instance.currentUser;
@@ -284,6 +293,7 @@ class _HomePageWidgetState extends State<HomePageWidget> with SingleTickerProvid
     }
   }
 
+  // Atualiza o número de copos de água consumidos no dia
   Future<void> _updateWaterIntake(int glasses) async {
     try {
       final user = FirebaseAuth.instance.currentUser;
@@ -332,6 +342,7 @@ class _HomePageWidgetState extends State<HomePageWidget> with SingleTickerProvid
     }
   }
 
+  // Constrói o layout principal do aplicativo
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -597,6 +608,7 @@ class _HomePageWidgetState extends State<HomePageWidget> with SingleTickerProvid
     );
   }
 
+  // Constrói os cards de ação rápida (Medicamentos, Refeições, etc)
   Widget _buildQuickActionCard(String title, IconData icon, VoidCallback onTap) {
     return Card(
       elevation: 0,
@@ -632,6 +644,7 @@ class _HomePageWidgetState extends State<HomePageWidget> with SingleTickerProvid
     );
   }
 
+  // Constrói o card de acompanhamento de água
   Widget _buildWaterTrackerCard() {
     return Card(
       elevation: 0,
@@ -727,6 +740,7 @@ class _HomePageWidgetState extends State<HomePageWidget> with SingleTickerProvid
     );
   }
 
+  // Constrói o card de dica diária de saúde
   Widget _buildDailyTipCard() {
     return Card(
       elevation: 0,
@@ -943,6 +957,7 @@ class _HomePageWidgetState extends State<HomePageWidget> with SingleTickerProvid
     );
   }
 
+  // Constrói o card de acompanhamento do humor
   Card _buildMoodTrackerCard() {
     return Card(
       child: Padding(

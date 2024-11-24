@@ -62,6 +62,7 @@ class _ProfilePageState extends State<ProfilePage> with SingleTickerProviderStat
     super.dispose();
   }
 
+  // Carrega os dados do usuário do Firebase
   Future<void> _loadUserData() async {
     try {
       final user = FirebaseAuth.instance.currentUser;
@@ -88,6 +89,7 @@ class _ProfilePageState extends State<ProfilePage> with SingleTickerProviderStat
     }
   }
 
+  // Abre modal para editar as informações do perfil
   Future<void> _editProfile() async {
     final TextEditingController fullNameController = TextEditingController(text: _fullName);
     final TextEditingController ageController = TextEditingController(text: _age);
@@ -184,6 +186,7 @@ class _ProfilePageState extends State<ProfilePage> with SingleTickerProviderStat
     );
   }
 
+  // Cria um campo de texto personalizado para o formulário
   Widget _buildTextField(
     TextEditingController controller,
     String label,
@@ -217,6 +220,7 @@ class _ProfilePageState extends State<ProfilePage> with SingleTickerProviderStat
     );
   }
 
+  // Realiza o logout do usuário
   Future<void> _logout() async {
     try {
       await FirebaseAuth.instance.signOut();
@@ -230,6 +234,7 @@ class _ProfilePageState extends State<ProfilePage> with SingleTickerProviderStat
     }
   }
 
+  // Constrói a interface principal da página
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
@@ -315,6 +320,7 @@ class _ProfilePageState extends State<ProfilePage> with SingleTickerProviderStat
     );
   }
 
+  // Cria os cards de informação animados (nome, email, idade, CEP)
   List<Widget> _buildAnimatedInfoTiles() {
     final items = [
       ('Full Name', _fullName, Icons.person_outline),
@@ -335,6 +341,7 @@ class _ProfilePageState extends State<ProfilePage> with SingleTickerProviderStat
     );
   }
 
+  // Cria um card de informação individual
   Widget _buildInfoTile(String label, String value, IconData icon) {
     return Container(
       margin: const EdgeInsets.only(bottom: 16),

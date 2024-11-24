@@ -1,19 +1,25 @@
 import 'package:flutter/material.dart';
 
+// Página que mostra os termos e condições do aplicativo
 class TermsPage extends StatelessWidget {
   const TermsPage({super.key});
 
+  // Constrói a interface da página
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // Barra superior do aplicativo
       appBar: AppBar(
         title: const Text('Terms and Conditions'),
       ),
+      // Área principal com rolagem
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
+        // Coluna principal que organiza o conteúdo
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: const [
+            // Título principal da página
             Text(
               'Terms and Conditions of Use',
               style: TextStyle(
@@ -22,6 +28,7 @@ class TermsPage extends StatelessWidget {
               ),
             ),
             SizedBox(height: 16),
+            // Texto com todos os termos e condições
             Text(
               '1. Acceptance of Terms\n\n'
               'By accessing and using the PureLife app, you agree to comply with these terms and conditions of use. If you do not agree with any part of these terms, you should not use the app.\n\n'

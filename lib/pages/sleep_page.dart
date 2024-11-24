@@ -60,6 +60,7 @@ class _SleepPageState extends State<SleepPage> with SingleTickerProviderStateMix
     super.dispose();
   }
 
+  // Carrega os dados de sono do usuário do Firebase
   Future<void> _loadSleepData() async {
     final user = FirebaseAuth.instance.currentUser;
     if (user == null) return;
@@ -91,6 +92,7 @@ class _SleepPageState extends State<SleepPage> with SingleTickerProviderStateMix
     }
   }
 
+  // Salva os dados de sono do usuário no Firebase
   Future<void> _saveSleepData() async {
     final user = FirebaseAuth.instance.currentUser;
     if (user == null) return;
@@ -111,6 +113,7 @@ class _SleepPageState extends State<SleepPage> with SingleTickerProviderStateMix
     }
   }
 
+  // Abre o diálogo para adicionar um novo registro de sono
   Future<void> _addSleepRecord() async {
     await showDialog(
       context: context,
@@ -118,6 +121,7 @@ class _SleepPageState extends State<SleepPage> with SingleTickerProviderStateMix
     );
   }
 
+  // Constrói o diálogo para adicionar ou editar um registro de sono
   Widget _buildSleepDialog({SleepRecord? record}) {
     final dialogState = _SleepDialogState(
       selectedDate: record?.date ?? DateTime.now(),
@@ -309,6 +313,7 @@ class _SleepPageState extends State<SleepPage> with SingleTickerProviderStateMix
     );
   }
 
+  // Salva um registro de sono novo ou editado
   void _saveSleepRecord(BuildContext context, _SleepDialogState state, SleepRecord? record) {
     final bedtimeDateTime = DateTime(
       state.selectedDate.year,
@@ -366,6 +371,7 @@ class _SleepPageState extends State<SleepPage> with SingleTickerProviderStateMix
     return '${hours}h ${minutes.toString().padLeft(2, '0')}m';
   }
 
+  // Obtém o registro mais recente para a data atual
   SleepRecord? _getLatestRecordForCurrentDate() {
     final now = DateTime.now();
     final today = DateTime(now.year, now.month, now.day);
@@ -384,6 +390,7 @@ class _SleepPageState extends State<SleepPage> with SingleTickerProviderStateMix
     return _sleepRecords.reduce((a, b) => a.date.isAfter(b.date) ? a : b);
   }
 
+  // Constrói o card que mostra o objetivo de sono
   Widget _buildSleepGoalCard() {
     final latestRecord = _getMostRecentRecord();
     double totalSleepMinutes = latestRecord?.durationInMinutes.toDouble() ?? 0;
@@ -494,6 +501,7 @@ class _SleepPageState extends State<SleepPage> with SingleTickerProviderStateMix
     );
   }
 
+  // Constrói o card para um registro de sono individual
   Widget _buildSleepRecordCard(SleepRecord record) {
     String duration = '${record.durationInMinutes ~/ 60}h ${(record.durationInMinutes % 60).toString().padLeft(2, '0')}m';
     
@@ -610,6 +618,7 @@ class _SleepPageState extends State<SleepPage> with SingleTickerProviderStateMix
     );
   }
 
+  // Abre o diálogo para configurar o objetivo de sono
   Future<void> _setSleepGoal() async {
     final controller = TextEditingController(
       text: (_sleepGoalInMinutes ~/ 60).toString()
@@ -702,6 +711,7 @@ class _SleepPageState extends State<SleepPage> with SingleTickerProviderStateMix
     );
   }
 
+  // Calcula a média de sono de todos os registros
   double _calculateAverageSleep() {
     if (_sleepRecords.isEmpty) return 0;
     int totalMinutes = _sleepRecords.fold(
@@ -711,6 +721,7 @@ class _SleepPageState extends State<SleepPage> with SingleTickerProviderStateMix
     return totalMinutes / _sleepRecords.length;
   }
 
+  // Constrói o card de análise com estatísticas de sono
   Widget _buildAnalyticsCard() {
     final avgSleep = _calculateAverageSleep();
     final recentRecord = _getMostRecentRecord();

@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+// Widget para completar o registro do usuário após o cadastro inicial
 class AfterRegisterWidget extends StatefulWidget {
   const AfterRegisterWidget({super.key});
 
@@ -17,6 +18,7 @@ class _AfterRegisterWidgetState extends State<AfterRegisterWidget> {
   final _cepController = TextEditingController();
   bool _isLoading = false;
 
+  // Função que salva os dados complementares do usuário no Firebase
   Future<void> _completeRegistration() async {
     if (!_formKey.currentState!.validate()) return;
 
@@ -52,6 +54,7 @@ class _AfterRegisterWidgetState extends State<AfterRegisterWidget> {
     }
   }
 
+  // Interface visual do formulário de cadastro complementar
   @override
   Widget build(BuildContext context) {
     return Scaffold(

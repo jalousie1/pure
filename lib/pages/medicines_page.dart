@@ -35,6 +35,7 @@ class _MedicinesPageState extends State<MedicinesPage> with SingleTickerProvider
     super.dispose();
   }
 
+  // Carrega os medicamentos do Firestore para a aplicação
   Future<void> _loadMedicines() async {
     final user = FirebaseAuth.instance.currentUser;
     if (user == null) return;
@@ -63,6 +64,7 @@ class _MedicinesPageState extends State<MedicinesPage> with SingleTickerProvider
     }
   }
 
+  // Salva os medicamentos da aplicação no Firestore
   Future<void> _saveMedicines() async {
     final user = FirebaseAuth.instance.currentUser;
     if (user == null) return;
@@ -87,6 +89,7 @@ class _MedicinesPageState extends State<MedicinesPage> with SingleTickerProvider
     );
   }
 
+  // Abre o diálogo para adicionar um novo medicamento
   Future<void> _addMedicine() async {
     await showDialog(
       context: context,
@@ -94,6 +97,7 @@ class _MedicinesPageState extends State<MedicinesPage> with SingleTickerProvider
     );
   }
 
+  // Cria o formulário de adicionar/editar medicamento
   Widget _buildMedicineDialog({Medicine? medicine}) {
     final nameController = TextEditingController(text: medicine?.name);
     final doseController = TextEditingController(text: medicine?.dose);
@@ -190,7 +194,7 @@ class _MedicinesPageState extends State<MedicinesPage> with SingleTickerProvider
     );
   }
 
-  // Add new method to build summary card
+  // Cria o card de resumo com total de medicamentos por período
   Widget _buildMedicineSummaryCard() {
     // Group medicines by time periods
     final morningMeds = _medicines.where((m) => m.hour >= 5 && m.hour < 12).length;
@@ -331,7 +335,7 @@ class _MedicinesPageState extends State<MedicinesPage> with SingleTickerProvider
     );
   }
 
-  // Add helper method to group and sort medicines
+  // Agrupa os medicamentos por período (Manhã, Tarde, Noite) e ordena por horário
   Map<String, List<Medicine>> _groupAndSortMedicines() {
     final groups = <String, List<Medicine>>{
       'Morning (5h-12h)': [],
@@ -430,7 +434,7 @@ class _MedicinesPageState extends State<MedicinesPage> with SingleTickerProvider
     );
   }
 
-  // Adicione um método para editar um medicamento
+  // Abre o diálogo para editar um medicamento existente
   Future<void> _editMedicine(Medicine medicine) async {
     await showDialog(
       context: context,

@@ -50,6 +50,7 @@ class _MealsPageState extends State<MealsPage> with SingleTickerProviderStateMix
     super.dispose();
   }
 
+  // Carrega as refeições do usuário do Firestore
   Future<void> _loadMeals() async {
     final user = FirebaseAuth.instance.currentUser;
     if (user == null) return;
@@ -78,6 +79,7 @@ class _MealsPageState extends State<MealsPage> with SingleTickerProviderStateMix
     }
   }
 
+  // Salva as refeições do usuário no Firestore
   Future<void> _saveMeals() async {
     final user = FirebaseAuth.instance.currentUser;
     if (user == null) return;
@@ -95,6 +97,7 @@ class _MealsPageState extends State<MealsPage> with SingleTickerProviderStateMix
     }
   }
 
+  // Abre o diálogo para adicionar uma nova refeição
   Future<void> _addMeal() async {
     await showDialog(
       context: context,
@@ -102,6 +105,7 @@ class _MealsPageState extends State<MealsPage> with SingleTickerProviderStateMix
     );
   }
 
+  // Cria o diálogo para adicionar ou editar uma refeição
   Widget _buildMealDialog({Meal? meal}) {
     final descriptionController = TextEditingController(text: meal?.description);
     final caloriesController = TextEditingController(
@@ -200,6 +204,7 @@ class _MealsPageState extends State<MealsPage> with SingleTickerProviderStateMix
     );
   }
 
+  // Retorna o ícone correspondente ao tipo de refeição
   IconData _getIconForMealType(String type) {
     final mealType = _mealTypes.firstWhere(
       (element) => element['type'] == type,
@@ -208,6 +213,7 @@ class _MealsPageState extends State<MealsPage> with SingleTickerProviderStateMix
     return mealType['icon'];
   }
 
+  // Cria o card com o resumo de todas as refeições
   Widget _buildMealsSummaryCard() {
     int totalCalories = _meals.fold(0, (sum, meal) => sum + meal.calories);
     int mealCount = _meals.length;
@@ -261,6 +267,7 @@ class _MealsPageState extends State<MealsPage> with SingleTickerProviderStateMix
     );
   }
 
+  // Cria um item do resumo (total, calorias, média)
   Widget _buildSummaryItem({
     required IconData icon,
     required String label,
@@ -348,7 +355,7 @@ class _MealsPageState extends State<MealsPage> with SingleTickerProviderStateMix
     );
   }
 
-  // Adicione o método _buildMealCard para criar cartões de refeição com UI aprimorada
+  // Cria o card para exibir uma refeição individual
   Widget _buildMealCard(Meal meal, int index) {
     return Card(
       elevation: 0,
@@ -437,7 +444,7 @@ class _MealsPageState extends State<MealsPage> with SingleTickerProviderStateMix
     );
   }
 
-  // Adicione um método para editar uma refeição
+  // Abre o diálogo para editar uma refeição existente
   Future<void> _editMeal(Meal meal) async {
     await showDialog(
       context: context,

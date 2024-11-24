@@ -24,12 +24,14 @@ class _WorkoutsPageState extends State<WorkoutsPage> {
     {'name': 'Walking', 'icon': Icons.directions_walk},
   ];
 
+  // Carrega os treinos do usuário quando a tela é iniciada
   @override
   void initState() {
     super.initState();
     _loadWorkouts();
   }
 
+  // Busca os treinos salvos no Firebase e atualiza a tela
   Future<void> _loadWorkouts() async {
     final user = FirebaseAuth.instance.currentUser;
     if (user == null) return;
@@ -58,6 +60,7 @@ class _WorkoutsPageState extends State<WorkoutsPage> {
     }
   }
 
+  // Salva os treinos do usuário no Firebase
   Future<void> _saveWorkouts() async {
     final user = FirebaseAuth.instance.currentUser;
     if (user == null) return;
@@ -75,6 +78,7 @@ class _WorkoutsPageState extends State<WorkoutsPage> {
     }
   }
 
+  // Abre o diálogo para adicionar um novo treino
   Future<void> _addWorkout() async {
     await showDialog(
       context: context,
@@ -82,6 +86,7 @@ class _WorkoutsPageState extends State<WorkoutsPage> {
     );
   }
 
+  // Cria o diálogo para adicionar ou editar um treino
   Widget _buildWorkoutDialog({Workout? workout}) {
     String selectedType = workout?.name ?? _workoutTypes[0]['name'];
     final durationController = TextEditingController(text: workout?.duration);
@@ -154,6 +159,7 @@ class _WorkoutsPageState extends State<WorkoutsPage> {
     );
   }
 
+  // Retorna o ícone correspondente ao tipo de treino selecionado
   IconData _getIconForWorkoutType(String type) {
     final workoutType = _workoutTypes.firstWhere(
       (element) => element['name'] == type,
@@ -162,6 +168,7 @@ class _WorkoutsPageState extends State<WorkoutsPage> {
     return workoutType['icon'];
   }
 
+  // Constrói a interface principal da tela de treinos
   @override
   Widget build(BuildContext context) {
     return Scaffold(

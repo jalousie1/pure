@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
+// Página de login do aplicativo
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 
@@ -9,11 +10,13 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  // Controladores e variáveis para gerenciar o formulário de login
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   bool _isLoading = false;
 
+  // Função para realizar o login com Firebase
   Future<void> _login() async {
     if (!_formKey.currentState!.validate()) return;
 
@@ -45,6 +48,7 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
 
+  // Constrói a interface da tela de login
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
@@ -64,6 +68,7 @@ class _LoginPageState extends State<LoginPage> {
           padding: const EdgeInsets.symmetric(horizontal: 32),
           child: Form(
             key: _formKey,
+            // Formulário com campos de email e senha
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [

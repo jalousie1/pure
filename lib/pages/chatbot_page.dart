@@ -63,6 +63,7 @@ class _ChatBotPageWidgetState extends State<ChatBotPageWidget> with TickerProvid
     )..repeat();
   }
 
+  // Faz a rolagem automática para o final da lista de mensagens
   void _scrollToBottom() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (_scrollController.hasClients) {
@@ -75,6 +76,7 @@ class _ChatBotPageWidgetState extends State<ChatBotPageWidget> with TickerProvid
     });
   }
 
+  // Envia a mensagem para a API do Gemini e processa a resposta
   Future<void> _sendMessage(String message) async {
     setState(() {
       _messages.add({'sender': 'user', 'text': message});
@@ -116,6 +118,7 @@ class _ChatBotPageWidgetState extends State<ChatBotPageWidget> with TickerProvid
     }
   }
 
+  // Trata erros de comunicação com a API
   void _handleError(String message) {
     setState(() {
       _messages.add({'sender': 'bot', 'text': message});
@@ -123,6 +126,7 @@ class _ChatBotPageWidgetState extends State<ChatBotPageWidget> with TickerProvid
     });
   }
 
+  // Processa o texto para formatar palavras entre ** como negrito
   List<TextSpan> _processText(String text) {
     List<TextSpan> spans = [];
     RegExp exp = RegExp(r'\*\*(.*?)\*\*');
@@ -152,6 +156,7 @@ class _ChatBotPageWidgetState extends State<ChatBotPageWidget> with TickerProvid
     return spans;
   }
 
+  // Constrói o visual de cada mensagem no chat
   Widget _buildMessage(Map<String, String> message, bool isUser) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     return TweenAnimationBuilder(
@@ -198,6 +203,7 @@ class _ChatBotPageWidgetState extends State<ChatBotPageWidget> with TickerProvid
     );
   }
 
+  // Cria o indicador animado de "digitando..." do bot
   Widget _buildTypingIndicator() {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     return Align(
@@ -220,6 +226,7 @@ class _ChatBotPageWidgetState extends State<ChatBotPageWidget> with TickerProvid
     );
   }
 
+  // Cria os pontos animados do indicador de "digitando..."
   Widget _buildDot(int index) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     return AnimatedBuilder(
@@ -244,6 +251,7 @@ class _ChatBotPageWidgetState extends State<ChatBotPageWidget> with TickerProvid
     );
   }
 
+  // Constrói a interface principal do chat
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
