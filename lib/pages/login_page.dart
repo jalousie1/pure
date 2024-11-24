@@ -47,61 +47,88 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    
     return Scaffold(
+      backgroundColor: colorScheme.surface,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back_ios, color: colorScheme.onSurface),
+          onPressed: () => Navigator.pop(context),
+        ),
       ),
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(24),
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.symmetric(horizontal: 32),
           child: Form(
             key: _formKey,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                const Text(
-                  'Welcome Back',
+                const SizedBox(height: 32),
+                Text(
+                  'Welcome\nBack',
                   style: TextStyle(
-                    fontSize: 28,
+                    fontSize: 40,
                     fontWeight: FontWeight.w300,
                     letterSpacing: 1.2,
+                    color: colorScheme.onSurface,
+                    height: 1.2,
                   ),
                 ),
-                const SizedBox(height: 48),
+                const SizedBox(height: 64),
                 TextFormField(
                   controller: _emailController,
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     labelText: 'Email',
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(8)),
+                    labelStyle: TextStyle(color: colorScheme.primary),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15),
+                      borderSide: BorderSide(color: colorScheme.outline),
                     ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15),
+                      borderSide: BorderSide(color: colorScheme.primary),
+                    ),
+                    filled: true,
+                    fillColor: colorScheme.surface,
                   ),
-                  keyboardType: TextInputType.emailAddress,
                   validator: (value) =>
                       value?.isEmpty ?? true ? 'Please enter your email' : null,
                 ),
-                const SizedBox(height: 16),
+                const SizedBox(height: 20),
                 TextFormField(
                   controller: _passwordController,
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     labelText: 'Password',
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(8)),
+                    labelStyle: TextStyle(color: colorScheme.primary),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15),
+                      borderSide: BorderSide(color: colorScheme.outline),
                     ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15),
+                      borderSide: BorderSide(color: colorScheme.primary),
+                    ),
+                    filled: true,
+                    fillColor: colorScheme.surface,
                   ),
                   obscureText: true,
                   validator: (value) =>
                       value?.isEmpty ?? true ? 'Please enter your password' : null,
                 ),
-                const SizedBox(height: 32),
+                const SizedBox(height: 40),
                 FilledButton(
                   onPressed: _isLoading ? null : _login,
                   style: FilledButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    padding: const EdgeInsets.symmetric(vertical: 20),
+                    backgroundColor: colorScheme.primary,
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
+                      borderRadius: BorderRadius.circular(30),
                     ),
+                    elevation: 2,
                   ),
                   child: _isLoading
                       ? const SizedBox(
@@ -112,7 +139,10 @@ class _LoginPageState extends State<LoginPage> {
                             color: Colors.white,
                           ),
                         )
-                      : const Text('Login'),
+                      : const Text(
+                          'Login',
+                          style: TextStyle(fontSize: 16, letterSpacing: 1),
+                        ),
                 ),
               ],
             ),

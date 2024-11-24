@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'dart:math';
 
 const String aiInstructions = '''
 Você é um assistente especializado em saúde geral do MindBot. Siga estas diretrizes:
@@ -46,11 +47,21 @@ class ChatBotPageWidget extends StatefulWidget {
   State<ChatBotPageWidget> createState() => _ChatBotPageWidgetState();
 }
 
-class _ChatBotPageWidgetState extends State<ChatBotPageWidget> {
+class _ChatBotPageWidgetState extends State<ChatBotPageWidget> with TickerProviderStateMixin {
   final _controller = TextEditingController();
   final _scrollController = ScrollController();
   final List<Map<String, String>> _messages = [];
   bool _isTyping = false;
+  late AnimationController _typingAnimController;
+
+  @override
+  void initState() {
+    super.initState();
+    _typingAnimController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 600),
+    )..repeat();
+  }
 
   void _scrollToBottom() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -141,8 +152,101 @@ class _ChatBotPageWidgetState extends State<ChatBotPageWidget> {
     return spans;
   }
 
+  Widget _buildMessage(Map<String, String> message, bool isUser) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    return TweenAnimationBuilder(
+      tween: Tween<double>(begin: 0, end: 1),
+      duration: const Duration(milliseconds: 500),
+      builder: (context, double value, child) {
+        return Opacity(
+          opacity: value,
+          child: Transform.translate(
+            offset: Offset(isUser ? 20 * (1 - value) : -20 * (1 - value), 0),
+            child: child,
+          ),
+        );
+      },
+      child: Align(
+        alignment: isUser ? Alignment.centerRight : Alignment.centerLeft,
+        child: Container(
+          margin: const EdgeInsets.symmetric(vertical: 4),
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+          constraints: BoxConstraints(
+            maxWidth: MediaQuery.of(context).size.width * 0.75,
+          ),
+          decoration: BoxDecoration(
+            color: isUser 
+              ? Theme.of(context).primaryColor 
+              : isDark ? Colors.grey.shade800 : Colors.grey.shade200,
+            borderRadius: BorderRadius.circular(20),
+          ),
+          child: isUser
+              ? Text(
+                  message['text']!,
+                  style: const TextStyle(color: Colors.white, fontSize: 16),
+                )
+              : RichText(
+                  text: TextSpan(
+                    children: _processText(message['text']!),
+                    style: TextStyle(
+                      color: isDark ? Colors.white : Colors.black87,
+                    ),
+                  ),
+                ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildTypingIndicator() {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    return Align(
+      alignment: Alignment.centerLeft,
+      child: Container(
+        margin: const EdgeInsets.only(left: 16, top: 4, bottom: 4),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+        decoration: BoxDecoration(
+          color: isDark ? Colors.grey.shade800 : Colors.grey.shade200,
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: List.generate(
+            3,
+            (index) => _buildDot(index),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildDot(int index) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    return AnimatedBuilder(
+      animation: _typingAnimController,
+      builder: (context, child) {
+        final offset = sin((_typingAnimController.value * pi * 2) - (index * 0.8));
+        return Container(
+          margin: const EdgeInsets.symmetric(horizontal: 2),
+          child: Transform.translate(
+            offset: Offset(0, offset * 4),
+            child: Container(
+              width: 8,
+              height: 8,
+              decoration: BoxDecoration(
+                color: isDark ? Colors.grey.shade500 : Colors.grey.shade600,
+                shape: BoxShape.circle,
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return Scaffold(
       appBar: AppBar(
         title: const Text('Chat com MindBot', style: TextStyle(fontWeight: FontWeight.w600)),
@@ -159,49 +263,13 @@ class _ChatBotPageWidgetState extends State<ChatBotPageWidget> {
               itemCount: _messages.length + (_isTyping ? 1 : 0),
               itemBuilder: (context, index) {
                 if (index == _messages.length) {
-                  return const Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Center(child: SizedBox(
-                      width: 24,
-                      height: 24,
-                      child: CircularProgressIndicator(strokeWidth: 2),
-                    )),
-                  );
+                  return _buildTypingIndicator();
                 }
 
                 final message = _messages[index];
                 final isUser = message['sender'] == 'user';
                 
-                return Align(
-                  alignment: isUser ? Alignment.centerRight : Alignment.centerLeft,
-                  child: Container(
-                    margin: const EdgeInsets.symmetric(vertical: 4),
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-                    constraints: BoxConstraints(
-                      maxWidth: MediaQuery.of(context).size.width * 0.75,
-                    ),
-                    decoration: BoxDecoration(
-                      color: isUser ? Theme.of(context).primaryColor : Colors.grey.shade200,  // Remove opacity
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: isUser 
-                      ? Text(
-                          message['text']!,
-                          style: TextStyle(
-                            color: isUser ? Colors.white : Colors.black87,
-                            fontSize: 16,
-                          ),
-                        )
-                      : RichText(
-                          text: TextSpan(
-                            children: _processText(message['text']!),
-                            style: const TextStyle(
-                              color: Colors.black87,
-                            ),
-                          ),
-                        ),
-                  ),
-                );
+                return _buildMessage(message, isUser);
               },
             ),
           ),
@@ -212,16 +280,26 @@ class _ChatBotPageWidgetState extends State<ChatBotPageWidget> {
                 Expanded(
                   child: TextFormField(
                     controller: _controller,
+                    style: TextStyle(
+                      color: isDark ? Colors.white : Colors.black87,
+                    ),
                     decoration: InputDecoration(
                       hintText: 'Digite sua mensagem...',
-                      hintStyle: TextStyle(color: Colors.grey.shade400),
+                      hintStyle: TextStyle(
+                        color: isDark ? Colors.grey.shade400 : Colors.grey.shade600,
+                      ),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(25),
                         borderSide: BorderSide.none,
                       ),
                       filled: true,
-                      fillColor: Colors.grey.shade100,
-                      contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                      fillColor: isDark 
+                        ? Colors.grey.shade800.withOpacity(0.9)
+                        : Colors.grey.shade100.withOpacity(0.9),
+                      contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 20, 
+                        vertical: 10
+                      ),
                     ),
                   ),
                 ),
@@ -253,6 +331,7 @@ class _ChatBotPageWidgetState extends State<ChatBotPageWidget> {
 
   @override
   void dispose() {
+    _typingAnimController.dispose();
     _scrollController.dispose();
     _controller.dispose();
     super.dispose();

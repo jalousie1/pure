@@ -8,7 +8,12 @@ import 'pages/home_page.dart';
 import 'pages/chatbot_page.dart';
 import 'pages/after_register.dart';
 import 'pages/profile_page.dart';  // Add this import
+import 'pages/medicines_page.dart';
+import 'pages/meals_page.dart';
+import 'pages/workouts_page.dart';
+import 'pages/sleep_page.dart';
 import 'firebase_options.dart';
+import 'pages/terms_page.dart';  // Add this import
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -53,7 +58,12 @@ class MainApp extends StatelessWidget {
         '/after_register': (context) => const AfterRegisterWidget(),
         '/home': (context) => const HomePageWidget(),
         '/chatbot': (context) => const ChatBotPageWidget(),
-        '/profile': (context) => const ProfilePage(),  // Add this route
+        '/profile': (context) => const ProfilePage(),
+        '/medicines': (context) => const MedicinesPage(),
+        '/meals': (context) => const MealsPage(),
+        '/workouts': (context) => const WorkoutsPage(),
+        '/sleep': (context) => const SleepPage(),
+        '/terms': (context) => const TermsPage(),
       },
       onUnknownRoute: (settings) => MaterialPageRoute(
         builder: (context) => const Scaffold(
