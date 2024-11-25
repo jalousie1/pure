@@ -2,6 +2,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 // Imports
 import 'pages/start_page.dart';
@@ -17,6 +19,9 @@ import 'pages/workouts_page.dart';
 import 'pages/sleep_page.dart';
 import 'firebase_options.dart';
 import 'pages/terms_page.dart';
+import 'pages/health_chat_page.dart';
+import 'pages/chat_room_page.dart';
+import 'pages/health_professional_chat_page.dart';
 
 // Função principal que inicia o aplicativo
 Future<void> main() async {
@@ -76,6 +81,15 @@ class MainApp extends StatelessWidget {
         '/workouts': (context) => const WorkoutsPage(), // Página de exercícios
         '/sleep': (context) => const SleepPage(),       // Página de sono
         '/terms': (context) => const TermsPage(),       // Página de termos
+        '/health-chat': (context) => const ChatRedirectPage(), // New redirect page
+        '/chat-room': (context) {
+          final args = ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+          return ChatRoomPage(
+            chatRoomId: args['chatRoomId'] as String,
+            recipientName: args['recipientName'] as String,
+            recipientId: args['recipientId'] as String,
+          );
+        },
       },
       // Página mostrada quando uma rota não é encontrada
       onUnknownRoute: (settings) => MaterialPageRoute(
@@ -84,5 +98,42 @@ class MainApp extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+// Add this class to handle redirect based on user type
+class ChatRedirectPage extends StatelessWidget {
+  const ChatRedirectPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder<bool>(
+      future: _isHealthProfessional(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Scaffold(
+            body: Center(child: CircularProgressIndicator()),
+          );
+        }
+
+        if (snapshot.data == true) {
+          return const HealthProfessionalChatPage();
+        } else {
+          return const HealthChatPage();
+        }
+      },
+    );
+  }
+
+  Future<bool> _isHealthProfessional() async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      final doc = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(user.uid)
+          .get();
+      return doc.data()?['health_professional'] == true;
+    }
+    return false;
   }
 }
